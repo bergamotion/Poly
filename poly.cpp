@@ -82,8 +82,12 @@ poly* poly_add_monomial(poly* p, int c, int e)
 
 //poly* poly_add(poly* p1, poly* p2) 
 //{
-//	poly* hea
-//	while()
+//	poly* result = p1;
+//	while (p2 != nullptr) {
+//		result = poly_add_monomial(result, p2->coeff, p2->exp);
+//		p2 = p2->next;
+//	}
+//	return result;
 //}
 
 
@@ -121,6 +125,7 @@ int parse_number(const char** str)
 {
 	char* end_of_number;
 	int number = strtol(*str, &end_of_number, 10);
+	if (*str == end_of_number) number = 1;
 	*str = end_of_number;
 	return number;
 }
@@ -133,9 +138,9 @@ void poly_print(poly* p)
 		int coeff = current->coeff;
 		int exp = current->exp;
 		if (coeff != 0) {
-			if (coeff > 0) {
-				std::cout << '+' << coeff;
-			}
+			if (coeff > 1) std::cout << '+' << coeff;
+			else if (coeff == 1) std::cout << '+';
+			else if (coeff == -1) std::cout << '-';
 			else std::cout << coeff;
 
 			if (exp != 0) {
@@ -145,4 +150,5 @@ void poly_print(poly* p)
 			current = current->next;
 		}
 	}
+	std::cout << std::endl;
 }
