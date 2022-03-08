@@ -15,3 +15,5 @@ void poly_print(poly* p);
 poly* poly_get(const char* str);
 poly* poly_add(poly* p1, poly* p2);
 poly* poly_multiply(poly* p1, poly* p2);
+poly* poly_copy(poly* p);
+

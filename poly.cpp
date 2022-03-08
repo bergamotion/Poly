@@ -141,15 +141,25 @@ void poly_print(poly* p)
 	std::cout << std::endl;
 }
 
+poly* poly_copy(poly* p)
+{
+	poly* head;
+	poly* element;
+	element = get_monomial(p->coeff, p->exp);
+	head = element;
+	p = p->next;
+	while (p) {
+		element->next = get_monomial(p->coeff, p->exp);
+		element = element->next;
+		p = p->next;
+	}
+	return head;
+}
 
 poly* poly_add(poly* p1, poly* p2)
 {
-	poly* result = get_monomial(p1->coeff, p1->exp);
-	p1 = p1->next;
-	while (p1) {
-		result = poly_add_monomial(result, p1->coeff, p1->exp);
-		p1 = p1->next;
-	}
+	poly* result = poly_copy(p1);
+
 	while (p2) {
 		result = poly_add_monomial(result, p2->coeff, p2->exp);
 		p2 = p2->next;
