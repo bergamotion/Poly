@@ -80,18 +80,6 @@ poly* poly_add_monomial(poly* p, int c, int e)
 }
 
 
-//poly* poly_add(poly* p1, poly* p2) 
-//{
-//	poly* result = p1;
-//	while (p2 != nullptr) {
-//		result = poly_add_monomial(result, p2->coeff, p2->exp);
-//		p2 = p2->next;
-//	}
-//	return result;
-//}
-
-
-
 int parse_coefficient(const char** str)
 {
 	int sign = 1;
@@ -133,7 +121,7 @@ int parse_number(const char** str)
 void poly_print(poly* p)
 {
 	poly* current = p;
-	while (current != nullptr)
+	while (current)
 	{
 		int coeff = current->coeff;
 		int exp = current->exp;
@@ -152,3 +140,24 @@ void poly_print(poly* p)
 	}
 	std::cout << std::endl;
 }
+
+
+poly* poly_add(poly* p1, poly* p2)
+{
+	poly* result = get_monomial(p1->coeff, p1->exp);
+	p1 = p1->next;
+	while (p1) {
+		result = poly_add_monomial(result, p1->coeff, p1->exp);
+		p1 = p1->next;
+	}
+	while (p2) {
+		result = poly_add_monomial(result, p2->coeff, p2->exp);
+		p2 = p2->next;
+	}
+	return result;
+}
+
+//poly* poly_multiply(poly* p1, poly* p2)
+//{
+//
+//}
