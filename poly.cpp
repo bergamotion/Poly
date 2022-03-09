@@ -127,8 +127,8 @@ void poly_print(poly* p)
 		int exp = current->exp;
 		if (coeff != 0) {
 			if (coeff > 1) std::cout << '+' << coeff;
-			else if (coeff == 1) std::cout << '+';
-			else if (coeff == -1) std::cout << '-';
+			else if (coeff == 1 && exp != 0) std::cout << '+';
+			else if (coeff == -1 && exp != 0) std::cout << '-';
 			else std::cout << coeff;
 
 			if (exp != 0) {
@@ -167,7 +167,21 @@ poly* poly_add(poly* p1, poly* p2)
 	return result;
 }
 
-//poly* poly_multiply(poly* p1, poly* p2)
-//{
-//
-//}
+poly* poly_multiply(poly* p1, poly* p2)
+{
+	int coeff, exp;
+	poly* headp1 = p1;
+	poly* result = get_monomial(p2->coeff * p1->coeff, p2->exp + p1->exp);
+	p1 = p1->next;
+	while (p2) {
+		while (p1) {
+			coeff = p2->coeff * p1->coeff;
+			exp = p2->exp + p1->exp;
+			result = poly_add_monomial(result, coeff, exp);
+			p1 = p1->next;
+		}
+		p1 = headp1;
+		p2 = p2->next;
+	}
+	return result;
+}
